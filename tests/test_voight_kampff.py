@@ -38,7 +38,8 @@ class TestVoightKampff(unittest.TestCase):
     def test_voight_kampff(self):
         vk = voka.voight_kampff.VoightKampff(self.reference_collection)
         result = vk.go(self.test_hist)
-        #self.assertFalse(isnan(result))
+        print(result)
+        self.assertTrue(len(result) == 100)
 
 unittest.main()
 
