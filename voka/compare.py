@@ -6,8 +6,8 @@ import voka.metrics.llh
 import voka.metrics.cvm
 import voka.metrics.ad
 
-all_metrics = [voka.metrics.chisq.NormChisq(),
-               voka.metrics.chisq.ShapeChisq(),
+all_metrics = [voka.metrics.chisq.NormChiSq(),
+               voka.metrics.chisq.ShapeChiSq(),
                voka.metrics.bdm.BDM(),
                voka.metrics.ks.KolmogorovSmirnof(),
                voka.metrics.llh.LLHRatio(),
@@ -15,7 +15,7 @@ all_metrics = [voka.metrics.chisq.NormChisq(),
                voka.metrics.cvm.CramerVonMises(),
                voka.metrics.ad.AndersonDarling()]
 
-default_metrics = [voka.metrics.chisq.ShapeChisq(),                   
+default_metrics = [voka.metrics.chisq.ShapeChiSq(),                   
                    voka.metrics.ad.AndersonDarling()]
 
 def compare(v1, v2, _metrics = default_metrics):

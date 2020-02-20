@@ -12,7 +12,7 @@ class BDM(object):
             The BDM.    
         """
         assert(len(v1) == len(v2))
-
+        
         if sum(v1) == 0 or sum(v2) == 0:
             return 1. # if they're both empty they're identical
         

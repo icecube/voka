@@ -51,7 +51,7 @@ class LLHValue(object):
         if Nu == 0 and Nv == 0:
             return 0.
     
-        for u,v in zip(h1['bin_values'], h2['bin_values']):
+        for u,v in zip(v1, v2):
             u = float(u)
             v = float(v)        
             t = u + v
