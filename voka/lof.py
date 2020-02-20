@@ -20,7 +20,11 @@ def _reach(p, k, o, D):
     i)  For at least k objects o' in D/{p} d(p,o') <= d(p,o)
     ii) For at most k-1 objects o' in D/{p} d(p,o') < d(p,o)
     '''
-    distances = [_distance(p, op) for op in D if p != op]
+    distances = list()
+    for op in D:
+        d = _distance(p, op)
+        if d > 0:
+            distances.append(d)
     distances.sort()
     kdistance = max(distances[:k]) if distances[:k] else 0.
     return max([kdistance, _distance(p, o)])
