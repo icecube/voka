@@ -6,6 +6,9 @@ __pycache__/
 # emacs backup files
 *~
 
+# any virtual environments
+*_venv
+
 # C extensions
 *.so
 
