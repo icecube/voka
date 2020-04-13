@@ -10,9 +10,9 @@ from math import isnan
 
 import numpy
 
-import voka.voight_kampff
+import voka.voka
 
-class TestVoightKampff(unittest.TestCase):
+class TestVoka(unittest.TestCase):
 
     def setUp(self):
         mu = 0.
@@ -35,8 +35,8 @@ class TestVoightKampff(unittest.TestCase):
                 dist = [random.gauss(mu, sigma) for _ in range(1000)]
                 self.reference_collection[reference_name][name] = numpy.histogram(dist)[0]
                            
-    def test_voight_kampff(self):
-        vk = voka.voight_kampff.VoightKampff(self.reference_collection)
+    def test_voka(self):
+        vk = voka.voka.Voka(self.reference_collection)
         result = vk.go(self.test_hist)
         print(result)
         self.assertTrue(len(result) == 100)

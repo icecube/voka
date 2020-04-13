@@ -3,7 +3,7 @@
 import numpy
 import pylab
 
-import voka.voight_kampff
+import voka.voka
 
 # This represents a collection of histograms
 collection_template = {'Gaussian': None,
@@ -27,7 +27,7 @@ for name, bm_data in benchmark_data.items():
     benchmark_histograms[name] = {n:numpy.histogram(data)[0]
                                   for n, data in bm_data.items()}
 
-voka_test = voka.voight_kampff.VoightKampff()
+voka_test = voka.voka.Voka()
 voka_test.determine_parameters(benchmark_histograms)
 test_result = voka_test.go(test_histograms)
 print(test_result)

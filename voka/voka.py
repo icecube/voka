@@ -2,7 +2,7 @@ import math
 import collections
 import voka.lof
 
-class VoightKampff(object):
+class Voka(object):
 
     def __init__(self):
         # the reference should be a collection (iterable)
@@ -11,10 +11,10 @@ class VoightKampff(object):
         # Test {'', []}
         pass
 
-    def determine_parameters(self,
-                             reference_collection,
-                             k=3,
-                             tolerance_factor = math.sqrt(2)):
+    def train(self,
+              reference_collection,
+              k=3,
+              tolerance_factor = math.sqrt(2)):
         '''
         Calculate LOF thresholds from the reference set.
         '''
@@ -45,7 +45,7 @@ class VoightKampff(object):
         self.__thresholds = {histogram_name: tolerance_factor*max(lofs)
                              for histogram_name, lofs in lof_values.items()}
 
-    def go(self, test):
+    def execute(self, test):
         # calculate the thresholds from
         # the benchmark set
         # we should also be able to determine
@@ -66,10 +66,10 @@ class VoightKampff(object):
             result[test_key] = lof
         return result
 
-    def calculate_results(self, results):
+    def results(self, results):
         result = dict()
         for key, lof in results.items():
-            result[key] = {'pass': lof < self.__thresholds[key],
+            result[key] = {'pass': lof <= self.__thresholds[key],
                            'lof': lof,
                            'threshold': self.__thresholds[key]}
         return result
