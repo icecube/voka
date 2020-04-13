@@ -1,4 +1,4 @@
-# voight_kampff_test
+# voka
 Sanity checks on sequences/histograms using unsupervised machine learning.
 
 # Dependencies
