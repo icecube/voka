@@ -37,7 +37,7 @@ class Voka(object):
             # Identity should resolve to 0 in each test
             # contributing nothing to the calculation of
             # the average.
-            result = self.go(test_collection)
+            result = self.execute(test_collection)
 
             for key, lof in result.items():
                 lof_values[key].append(lof)

@@ -3,7 +3,7 @@
 import numpy
 import pylab
 
-import voka.voka
+import voka.model
 
 # This represents a collection of histograms
 collection_template = {'Gaussian': None,

@@ -10,7 +10,7 @@ from math import isnan
 
 import numpy
 
-import voka.voka
+import voka.model
 
 class TestVoka(unittest.TestCase):
 
@@ -36,8 +36,9 @@ class TestVoka(unittest.TestCase):
                 self.reference_collection[reference_name][name] = numpy.histogram(dist)[0]
                            
     def test_voka(self):
-        vk = voka.voka.Voka(self.reference_collection)
-        result = vk.go(self.test_hist)
+        vk = voka.model.Voka()
+        vk.train(self.reference_collection)
+        result = vk.execute(self.test_hist)
         print(result)
         self.assertTrue(len(result) == 100)
 
