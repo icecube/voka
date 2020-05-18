@@ -1,24 +1,21 @@
 #!/usr/bin/env python
 
 import numpy
-import pylab
 
 import voka.model
 
-# This represents a collection of histograms
-collection_template = {'Gaussian': None,
-                       'Poisson': None}
-
-test_data = {'Gaussian': numpy.random.normal(size=100),
-             'Uniform': numpy.random.uniform(size=100)}
+test_data = {
+    'Gaussian': numpy.random.normal(size=100),
+    'Uniform': numpy.random.uniform(size=100)
+}
 
 n_benchmark_collections = 5
-benchmark_names = ['Benchmark_%d' % i for i in range(n_benchmark_collections)]
-benchmark_data = dict()
-for benchmark_name in benchmark_names:
-    benchmark_data[benchmark_name] = {'Gaussian': numpy.random.normal(size=100),
-                                      'Uniform': numpy.random.uniform(size=100)}
-
+benchmark_labels = ['Benchmark_%d' % i for i in range(n_benchmark_collections)]
+benchmark_data = {
+    benchmark_label:{'Gaussian': numpy.random.normal(size=100),
+                     'Uniform': numpy.random.uniform(size=100)}
+    for benchmark_label in benchmark_labels
+}
 
 # histogram the data
 test_histograms = {name:numpy.histogram(data)[0] for name, data in test_data.items()}
@@ -27,8 +24,8 @@ for name, bm_data in benchmark_data.items():
     benchmark_histograms[name] = {n:numpy.histogram(data)[0]
                                   for n, data in bm_data.items()}
 
-voka_test = voka.voka.Voka()
-voka_test.determine_parameters(benchmark_histograms)
-test_result = voka_test.go(test_histograms)
-print(test_result)
-print(voka_test.calculate_results(test_result))
+voka_test = voka.model.Voka()
+voka_test.train(benchmark_histograms)
+result = voka_test.execute(test_histograms)
+print(result)
+print(voka_test.results(result))
