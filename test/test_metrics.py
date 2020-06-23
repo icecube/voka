@@ -1,8 +1,6 @@
 #!/usr/bin/env python
 import unittest
 import os
-import sys
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../..')))
 
 import random
 from math import sqrt
@@ -42,5 +40,7 @@ class TestMetrics(unittest.TestCase):
         self.assertTrue('AndersonDarling' in result)
         self.assertTrue('ShapeChiSq' in result)
         
-unittest.main()
+if __name__=='__main__':
+    unittest.main()
+
 

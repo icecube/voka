@@ -1,8 +1,6 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 import unittest
 import os
-import sys
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../..')))
 
 import random
 from math import sqrt
@@ -39,8 +37,8 @@ class TestVoka(unittest.TestCase):
         vk = voka.model.Voka()
         vk.train(self.reference_collection)
         result = vk.execute(self.test_hist)
-        print(result)
         self.assertTrue(len(result) == 100)
 
-unittest.main()
+if __name__=='__main__':
+    unittest.main()
 
