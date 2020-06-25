@@ -7,7 +7,7 @@ from math import fabs
 class KolmogorovSmirnof:
     '''
     Function object which calculates the KS
-    test statistic between two sequences.
+    test statistic between two sets of numbers.
     '''
     def __call__(self, vector1, vector2):
         r"""Calculate the Kolmogorov-Smirnof test statistic
