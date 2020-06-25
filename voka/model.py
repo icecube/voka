@@ -1,39 +1,42 @@
+'''
+The model module currently consists solely of the Voka class.
+'''
+
 import math
 import collections
 import voka.lof
 
-class Voka(object):
-
+class Voka:
+    '''
+    Class to handle determination of the outlier detection thresholds
+    for a given set of benchmark histograms.
+    '''
     def __init__(self):
-        # the reference should be a collection (iterable)
-        # of reference dictionaries.
+        # the reference collection is a dictionary containing
+        # as values dictionaries with the same structure as the test
+        # dictionary.  The keys are arbitrary names for the different
+        # sets.
         # Reference {'', {'', []}}
         # Test {'', []}
-        pass
+        self.__reference_collection = dict()
+        self.__k = int()
+        self.__thresholds = dict()
 
     def train(self,
               reference_collection,
               k=3,
-              tolerance_factor = math.sqrt(2)):
+              tolerance_factor=math.sqrt(2)):
         '''
         Calculate LOF thresholds from the reference set.
         '''
         self.__reference_collection = reference_collection
         self.__k = k
-        # Determining a reasonable value for k on the fly
-        # is going to be difficult, I think.
 
         # we use each one as a test and the others
         # as a benchmark set and determine the
-
-        # we just need an example collection because we want
-        # to retain the same structure
-        #collection = list(reference_collection.values())[0]
-        #lof_values = {name:list() for name in collection.keys()}
-
         lof_values = collections.defaultdict(list)
-        for test_name, test_collection in reference_collection.items():
-            # I don't have to remove the set from itself.
+        for test_collection in reference_collection.values():
+            # No need to remove the set from itself.
             # Identity should resolve to 0 in each test
             # contributing nothing to the calculation of
             # the average.
@@ -46,18 +49,17 @@ class Voka(object):
                              for histogram_name, lofs in lof_values.items()}
 
     def execute(self, test):
-        # calculate the thresholds from
-        # the benchmark set
-        # we should also be able to determine
-        # a reasonable k-distance
+        '''
+        calculate the thresholds from the benchmark set
+        '''
         result = dict()
         for test_key, test_sequence in test.items():
 
             # pull the reference sequences out of the collection
             reference_sequences = list()
-            for reference_name, reference_set in self.__reference_collection.items():
-                if test_key in reference_set:
-                    reference_sequences.append(reference_set[test_key])
+            for ref_set in self.__reference_collection.values():
+                if test_key in ref_set:
+                    reference_sequences.append(ref_set[test_key])
 
             lof = voka.lof.LOF(test_sequence,
                                self.__k,
@@ -67,6 +69,10 @@ class Voka(object):
         return result
 
     def results(self, results):
+        '''
+        Apply the thresholds determined during training
+        and indicate pass/fail.
+        '''
         result = dict()
         for key, lof in results.items():
             result[key] = {'pass': lof <= self.__thresholds[key],
