@@ -30,7 +30,7 @@ class TestMetrics(unittest.TestCase):
         self.gaussian2 = h2[0]
         
     def test_all(self):
-        for m in voka.compare.all_metrics:
+        for m in voka.compare.ALL_METRICS:
             result = m(self.gaussian1, self.gaussian2)
             self.assertFalse(isnan(result))
 
