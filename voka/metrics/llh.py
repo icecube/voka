@@ -1,23 +1,20 @@
 from math import log
 from scipy.special import binom
 
-class LLHRatio(object):
-    
-    def __call__(self, v1, v2):
+class LLHRatio:
+
+    def __call__(self, vector1, vector2):
         r"""
-        Compare sequences v1, v2 with the log likelihood ratio test.
+        Compare sequences vector1, vector2 with the log likelihood ratio test.
         """
         result = 0.
-        Nu = float(sum(v1))
-        Nv = float(sum(v2))
-        
-        if Nu == 0:
-            if Nv == 0:
-                return 1.
-            else:
-                return 0.
-    
-        for u,v in zip(v1, v2):
+        if not vector1 and not vector2:
+            return result
+
+        Nu = float(sum(vector1))
+        Nv = float(sum(vector2))
+
+        for u, v in zip(vector1, vector2):
             u = float(u)
             v = float(v)
             t = u + v
@@ -26,7 +23,7 @@ class LLHRatio(object):
                 continue
             if u == 0:
                 result += t*log(Nu/(Nu+Nv))
-                continue        
+                continue
             if v == 0:
                 result += t*log(Nv/(Nu+Nv))
                 continue
@@ -34,11 +31,11 @@ class LLHRatio(object):
             term2 = v*log((Nv/Nu)*(u/v))
             result += term1 + term2
             T = -2*result
-            return T
+        return T
 
-class LLHValue(object):
-    
-    def __call__(self, v1, v2):
+class LLHValue:
+
+    def __call__(self, vector1, vector2):
 
         r"""
         Compare histograms h1, h2 with the log likelihood value test.
@@ -46,20 +43,20 @@ class LLHValue(object):
            never do that. Taking it out of the rotation.
         """
         result = 0.
-        Nu = float(sum(v1))
-        Nv = float(sum(v2))
-        if Nu == 0 and Nv == 0:
-            return 0.
-    
-        for u,v in zip(v1, v2):
+        if not vector1 and not vector2:
+            return result
+
+        Nu = float(sum(vector1))
+        Nv = float(sum(vector2))
+
+        for u, v in zip(vector1, vector2):
             u = float(u)
-            v = float(v)        
+            v = float(v)
             t = u + v
-            bn = binom(t,v)
+            bn = binom(t, v)
             term1 = log(bn)
             term2 = t*log(Nu/(Nu + Nv))
             term3 = v*log(Nv/Nu)
             result += term1 + term2 + term3
             T = -result
-            return T
-
+        return T
