@@ -8,7 +8,7 @@ class LLHRatio:
         Compare sequences vector1, vector2 with the log likelihood ratio test.
         """
         result = 0.
-        if not vector1 and not vector2:
+        if not any(vector1) and not any(vector2):
             return result
 
         Nu = float(sum(vector1))
@@ -43,7 +43,7 @@ class LLHValue:
            never do that. Taking it out of the rotation.
         """
         result = 0.
-        if not vector1 and not vector2:
+        if not any(vector1) and not any(vector2):
             return result
 
         Nu = float(sum(vector1))

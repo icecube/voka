@@ -14,7 +14,7 @@ class CramerVonMises:
         Compare sequences vector1, vector2 with the Cramer-von-Mises test.
         """
         result = 0.
-        if not sum(vector1) and not sum(vector2):
+        if not any(vector1) and not any(vector2):
             return result
 
         Nu = float(sum(vector1))
