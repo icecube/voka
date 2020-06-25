@@ -1,26 +1,32 @@
+'''
+  The Kolmogorov-Smirnof test statistic.
+'''
+
 from math import fabs
 
-class KolmogorovSmirnof(object):
-    def __call__(self, v1, v2):
-        r"""Calculate the Kolmogorov-Smirnof test statistic for two sequences
-        which are assumed to have the same binning. The binning needs to be small
-        compared to important features of the histograms.
+class KolmogorovSmirnof:
+    '''
+    Function object which calculates the KS
+    test statistic between two sequences.
+    '''
+    def __call__(self, vector1, vector2):
+        r"""Calculate the Kolmogorov-Smirnof test statistic
+        for two numerical sequences of the same length
+
         Output:
         T : float
-            Maximum distance between the cumulative distributions.            
+            Maximum distance between the cumulative distributions.
         """
-        assert(len(v1) == len(v2))
-        
-        nbins = len(v1)
-        s1 = sum(v1)
-        s2 = sum(v2)
-        
-        if s1 == 0 and s2 == 0:
+        assert len(vector1) == len(vector2)
+
+        nbins = len(vector1)
+        sum1 = sum(vector1)
+        sum2 = sum(vector2)
+
+        if sum1 == 0 and sum2 == 0:
             return 0.
 
-        cdf_diffs = [fabs(sum(v1[:i])/s1 - sum(v2[:i])/s2)
+        cdf_diffs = [fabs(sum(vector1[:i])/sum1 - sum(vector2[:i])/sum2)
                      for i in range(nbins)]
-        T = max(cdf_diffs)    
-        return T
-        
-    
+        result = max(cdf_diffs)
+        return result
