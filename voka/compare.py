@@ -1,12 +1,14 @@
-
+'''
+This module contains the compare function.
+'''
 import voka.metrics.chisq
-import voka.metrics.bdm 
+import voka.metrics.bdm
 import voka.metrics.ks
 import voka.metrics.llh
 import voka.metrics.cvm
 import voka.metrics.ad
 
-all_metrics = [voka.metrics.chisq.NormChiSq(),
+ALL_METRICS = [voka.metrics.chisq.NormChiSq(),
                voka.metrics.chisq.ShapeChiSq(),
                voka.metrics.bdm.BDM(),
                voka.metrics.ks.KolmogorovSmirnof(),
@@ -15,28 +17,26 @@ all_metrics = [voka.metrics.chisq.NormChiSq(),
                voka.metrics.cvm.CramerVonMises(),
                voka.metrics.ad.AndersonDarling()]
 
-default_metrics = [voka.metrics.chisq.ShapeChiSq(),                   
+DEFAULT_METRICS = [voka.metrics.chisq.ShapeChiSq(),
                    voka.metrics.ad.AndersonDarling()]
 
-def compare(v1, v2, _metrics = default_metrics):
-    r'''For all enabled test_{name}, compare hist1 and hist2.
+def compare(values1, values2, metrics=None):
+    r'''
+    To use all metrics set metrics to 'all_metrics'
     Output:
-        result : dict 
-            test name : value of test statistic 
-            Will be empty if no tests enabled, or histograms inconsistent.    
-
-            llh_value often returns -inf for histograms with moderate bin contents.
-            Taking it out of the rotation for now. 
+        result : dict
+            test name : value of test statistic
+            Will be empty if no tests enabled, or histograms inconsistent.
     '''
 
     result = {}
-    if len(v1) != len(v2):
+    if len(values1) != len(values2):
         print("ERROR : sequences are inconsistent.")
         return result
 
-    for m in _metrics:
-        result[m.__class__.__name__] = m(v1, v2)
-    
+    _metrics = metrics if metrics else DEFAULT_METRICS
+
+    for metric in _metrics:
+        result[metric.__class__.__name__] = metric(values1, values2)
+
     return result
-    
-    
