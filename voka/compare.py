@@ -11,7 +11,7 @@ import voka.metrics.ad
 ALL_METRICS = [voka.metrics.chisq.NormChiSq(),
                voka.metrics.chisq.ShapeChiSq(),
                voka.metrics.bdm.BDM(),
-               voka.metrics.ks.KolmogorovSmirnof(),
+               voka.metrics.ks.KolmogorovSmirnov(),
                voka.metrics.llh.LLHRatio(),
                voka.metrics.llh.LLHValue(),
                voka.metrics.cvm.CramerVonMises(),

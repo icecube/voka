@@ -1,16 +1,16 @@
 '''
-  The Kolmogorov-Smirnof test statistic.
+  The Kolmogorov-Smirnov test statistic.
 '''
 
 from math import fabs
 
-class KolmogorovSmirnof:
+class KolmogorovSmirnov:
     '''
     Function object which calculates the KS
     test statistic between two sets of numbers.
     '''
     def __call__(self, vector1, vector2):
-        r"""Calculate the Kolmogorov-Smirnof test statistic
+        r"""Calculate the Kolmogorov-Smirnov test statistic
         for two numerical sequences of the same length
 
         Output:
