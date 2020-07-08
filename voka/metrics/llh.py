@@ -1,40 +1,50 @@
+'''
+Module that contains two log-likehood based metrics.
+1) LLHRatio
+2) LLHValue
+'''
+
 from math import log
 from scipy.special import binom
 
 class LLHRatio:
-
+    '''
+    Function object that calculates the likelihood ratio
+    between two numerical sequences.
+    '''
     def __call__(self, vector1, vector2):
         r"""
-        Compare sequences vector1, vector2 with the log likelihood ratio test.
+        Calculates the Likelihood ratio between two sequences.
         """
         result = 0.
         if not any(vector1) and not any(vector2):
             return result
 
-        Nu = float(sum(vector1))
-        Nv = float(sum(vector2))
+        sum1 = float(sum(vector1))
+        sum2 = float(sum(vector2))
 
-        for u, v in zip(vector1, vector2):
-            u = float(u)
-            v = float(v)
-            t = u + v
-            if u == 0 and v == 0:
+        for u_1, u_2 in zip(vector1, vector2):
+            sum12 = u_1 + u_2
+            if u_1 == 0 and u_2 == 0:
                 result += 1
                 continue
-            if u == 0:
-                result += t*log(Nu/(Nu+Nv))
+            if u_1 == 0:
+                result += sum12*log(sum1/(sum1+sum2))
                 continue
-            if v == 0:
-                result += t*log(Nv/(Nu+Nv))
+            if u_2 == 0:
+                result += sum12*log(sum2/(sum1+sum2))
                 continue
-            term1 = t*log((1+v/u)/(1+Nv/Nu))
-            term2 = v*log((Nv/Nu)*(u/v))
+            term1 = sum12*log((1+u_2/u_1)/(1+sum2/sum1))
+            term2 = u_2*log((sum2/sum1)*(u_1/u_2))
             result += term1 + term2
-            T = -2*result
-        return T
+
+        return -2*result
 
 class LLHValue:
-
+    '''
+    Function object that calculates the likelihood ratio
+    between two numerical sequences.
+    '''
     def __call__(self, vector1, vector2):
 
         r"""
@@ -46,17 +56,14 @@ class LLHValue:
         if not any(vector1) and not any(vector2):
             return result
 
-        Nu = float(sum(vector1))
-        Nv = float(sum(vector2))
+        sum1 = float(sum(vector1))
+        sum2 = float(sum(vector2))
 
-        for u, v in zip(vector1, vector2):
-            u = float(u)
-            v = float(v)
-            t = u + v
-            bn = binom(t, v)
-            term1 = log(bn)
-            term2 = t*log(Nu/(Nu + Nv))
-            term3 = v*log(Nv/Nu)
+        for u_1, u_2 in zip(vector1, vector2):
+            sum12 = u_1 + u_2
+            term1 = log(binom(sum12, u_2))
+            term2 = sum12*log(sum1/(sum1 + sum2))
+            term3 = u_2*log(sum2/sum1)
             result += term1 + term2 + term3
-            T = -result
-        return T
+
+        return -result
