@@ -33,8 +33,12 @@ for i in range(N_HISTOGRAMS):
     data = numpy.random.normal(size=SIZE)
     histograms['Gaussian%d' % i] = numpy.histogram(data, bins=BINS)
 
-    data = numpy.random.normal(size=int(SIZE/2), loc=-1, scale=0.25) + \
-        numpy.random.normal(size=int(SIZE/2), loc=1, scale=0.25)
+    data = numpy.random.normal(size=int(SIZE/2),
+                               loc=-1,
+                               scale=0.25) +\
+                               numpy.random.normal(size=int(SIZE/2),
+                                                   loc=1,
+                                                   scale=0.25)
     histograms['BiGaussian%d' % i] = numpy.histogram(data, bins=BINS)
 
     data = numpy.random.exponential(scale=10, size=1000)
