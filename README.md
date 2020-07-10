@@ -3,7 +3,31 @@ Sanity checks on sequences/histograms using unsupervised machine learning.
 
 # Dependencies
 
-Currently the only dependency is numpy and optionally matplotlib for rendering histograms.
+* numpy
+* matplotlib
+* scipy
+
+```
+   numpy (basic_example,classic_fit_example,standard_distribution_comparisons,stochastic_example,test.test_lof,test.test_metrics,test.test_voka,vanilla_gaussian,voka.lof)
+    pylab (classic_fit_example,standard_distribution_comparisons,stochastic_example,vanilla_gaussian)
+    scipy 
+      \-optimize (classic_fit_example,standard_distribution_comparisons,stochastic_example,vanilla_gaussian)
+      \-special (voka.metrics.llh)
+      \-stats (standard_distribution_comparisons,stochastic_example,vanilla_gaussian)
+    voka 
+      \-compare (test.test_metrics)
+      \-lof (test.test_lof)
+      \-metrics 
+      | \-ad (test.test_metrics)
+      | \-bdm (test.test_metrics)
+      | \-chisq (standard_distribution_comparisons,stochastic_example,test.test_metrics,vanilla_gaussian)
+      | \-cvm (test.test_metrics)
+      | \-ks (test.test_metrics)
+      | \-llh (test.test_metrics)
+      \-model (basic_example,test.test_voka)
+
+```
+
 
 # Test Coverage
 
@@ -24,6 +48,12 @@ voka/metrics/llh.py           47     10    79%
 voka/model.py                 30      4    87%
 ----------------------------------------------
 TOTAL                        207     25    88%
+```
+
+## Running Tests
+```sh
+$ python3 -m unittest
+$ coverage run --source=voka -m unittest
 ```
 
 # Introduction
