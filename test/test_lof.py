@@ -42,7 +42,10 @@ class TestLOF(unittest.TestCase):
               Test for pathological inputs and ensure the fail
               in a sane manner.
         '''
-        result = voka.lof.LOF(self.test_hist, 3, self.reference_collection)
+        k_distance = 3
+        result = voka.lof.local_outlier_factor(self.test_hist,
+                                               k_distance,
+                                               self.reference_collection)
         self.assertFalse(numpy.isnan(result))
 
 if __name__ == '__main__':

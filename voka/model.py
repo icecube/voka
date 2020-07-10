@@ -61,9 +61,9 @@ class Voka:
                 if test_key in ref_set:
                     reference_sequences.append(ref_set[test_key])
 
-            lof = voka.lof.LOF(test_sequence,
-                               self.__k,
-                               reference_sequences)
+            lof = voka.lof.local_outlier_factor(test_sequence,
+                                                self.__k,
+                                                reference_sequences)
 
             result[test_key] = lof
         return result
