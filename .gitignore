@@ -1,3 +1,7 @@
+# data files (pickle, compressed I3, etc...)
+*.pkl
+*.zst
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
