@@ -9,7 +9,7 @@ import voka.lof
 class Voka:
     '''
     Class to handle determination of the outlier detection thresholds
-    for a given set of benchmark histograms.
+    for a given set of benchmark samples.
     '''
     def __init__(self):
         # the reference collection is a dictionary containing
@@ -41,12 +41,14 @@ class Voka:
             # contributing nothing to the calculation of
             # the average.
             result = self.execute(test_collection)
+            assert(result)
 
             for key, lof in result.items():
                 lof_values[key].append(lof)
 
         self.__thresholds = {histogram_name: tolerance_factor*max(lofs)
                              for histogram_name, lofs in lof_values.items()}
+        assert(self.__thresholds)
 
     def execute(self, test):
         '''
@@ -75,7 +77,11 @@ class Voka:
         '''
         result = dict()
         for key, lof in results.items():
-            result[key] = {'pass': lof <= self.__thresholds[key],
-                           'lof': lof,
-                           'threshold': self.__thresholds[key]}
+            if key not in self.__thresholds:
+                continue
+            result[key] = {
+                'pass': lof <= self.__thresholds[key],
+                'lof': lof,
+                'threshold': self.__thresholds[key]
+            }
         return result
