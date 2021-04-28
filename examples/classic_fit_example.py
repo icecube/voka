@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 '''
 Example illustrating the classic method, meaning fitting by hand.
@@ -33,17 +33,16 @@ p1 = [1000., 0., 1.]
 print(hist)
 print(bin_centers)
 
-result = scipy.optimize.curve_fit(gauss, bin_centers, hist, p0=p1)
-fitted_amplitude = result[0]
-fitted_mean = result[1]
-fitted_std_dev = result[2]
+popt, pcov = scipy.optimize.curve_fit(gauss, bin_centers, hist, p0=p1)
+fitted_amplitude = popt[0]
+fitted_mean = popt[1]
+fitted_std_dev = popt[2]
 
 print('Fitted amplitude = %f' % fitted_amplitude)
 print('Fitted mean = %f' % fitted_mean)
 print('Fitted standard deviation = %f' % fitted_std_dev)
 
-coeff = tuple(result[:3])
-hist_fit = gauss(bin_centers, *coeff)
+hist_fit = gauss(bin_centers, *popt)
 pylab.hist(data)
 pylab.plot(bin_centers, gauss(bin_centers, *p0), label='Initial')
 pylab.plot(bin_centers, hist_fit, label='Fitted data')

@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 '''
 Basic example which creates a dummy test dataset and a
 benchmark collection.  This example 'trains' on the benchmark

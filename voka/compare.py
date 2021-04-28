@@ -1,28 +1,31 @@
 '''
 This module contains the compare function.
 '''
-import voka.metrics.chisq
-import voka.metrics.bdm
-import voka.metrics.ks
-import voka.metrics.llh
-import voka.metrics.cvm
-import voka.metrics.ad
+import voka.metrics
 
-ALL_METRICS = [voka.metrics.chisq.NormChiSq(),
-               voka.metrics.chisq.ShapeChiSq(),
-               voka.metrics.bdm.BDM(),
-               voka.metrics.ks.KolmogorovSmirnov(),
-               voka.metrics.llh.LLHRatio(),
-               voka.metrics.llh.LLHValue(),
-               voka.metrics.cvm.CramerVonMises(),
-               voka.metrics.ad.AndersonDarling()]
+ALL_METRICS = {"NormChiSq":voka.metrics.norm_chisq,
+               "ShapeChiSq":voka.metrics.shape_chisq,
+               "BDM":voka.metrics.bdm,
+               "KolmogorovSmirnov":voka.metrics.kolmogorov_smirnov,
+               "LLHRatio":voka.metrics.llh_ratio,
+               "LLHValue":voka.metrics.llh_value,
+               "CramerVonMises":voka.metrics.cramer_von_mises,
+               "AndersonDarling":voka.metrics.anderson_darling}
 
-DEFAULT_METRICS = [voka.metrics.chisq.ShapeChiSq(),
-                   voka.metrics.ad.AndersonDarling()]
+DEFAULT_METRICS = {"ShapeChiSq":voka.metrics.shape_chisq,
+                   "AndersonDarling":voka.metrics.anderson_darling}
 
 def compare(values1, values2, metrics=None):
     r'''
-    To use all metrics set metrics to 'all_metrics'
+    To use all metrics set metrics to voka.compare.ALL_METRICS,
+    otherwise pass a dictionary where the values are the metrics
+    to use with named keys (can be anything), e.g.:
+
+        metrics = {
+                   'foo': voka.metrics.norm_chisq, 
+                   'bar': voka.metrics.anderson_darling
+                  }
+
     Output:
         result : dict
             test name : value of test statistic
@@ -36,7 +39,7 @@ def compare(values1, values2, metrics=None):
 
     _metrics = metrics if metrics else DEFAULT_METRICS
 
-    for metric in _metrics:
-        result[metric.__class__.__name__] = metric(values1, values2)
+    for name, metric in _metrics.items():
+        result[name] = metric(values1, values2)
 
     return result

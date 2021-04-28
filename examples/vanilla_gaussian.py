@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 '''
 Vanilla gaussian example.
@@ -10,7 +10,7 @@ import pylab
 import scipy.optimize
 import scipy.stats
 
-import voka.metrics.chisq
+import voka.metrics
 
 histograms = dict()
 N_HISTOGRAMS = 1000
@@ -29,7 +29,7 @@ def gauss(x, *p):
     amplitude, mean, sigma = p
     return amplitude*numpy.exp(-(x-mean)**2/(2.*sigma**2))
 
-test_stat = voka.metrics.chisq.NormChiSq()
+test_stat = voka.metrics.norm_chisq
 NDOF = None
 T_dist = list()
 for i in range(N_HISTOGRAMS):

@@ -26,7 +26,6 @@ import pylab
 import voka.tools.samples
 import voka.model
 import voka.tools.render
-import cicada.histogram.draw_comparisons
 
 def voka_2sample(sample1, sample2):
     # Checkout OnlineL2_SplitTime2_SPE2itFitEnergy

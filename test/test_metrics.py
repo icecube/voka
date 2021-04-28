@@ -11,12 +11,7 @@ from math import isnan
 import numpy
 
 import voka.compare
-import voka.metrics.chisq
-import voka.metrics.ad
-import voka.metrics.ks
-import voka.metrics.cvm
-import voka.metrics.bdm
-import voka.metrics.llh
+import voka.metrics
 
 class TestMetrics(unittest.TestCase):
     '''
@@ -33,7 +28,7 @@ class TestMetrics(unittest.TestCase):
         self.gaussian2 = hist2[0]
 
     def test_all(self):
-        for metric in voka.compare.ALL_METRICS:
+        for metric in voka.compare.ALL_METRICS.values():
             result = metric(self.gaussian1, self.gaussian2)
             self.assertFalse(isnan(result))
 

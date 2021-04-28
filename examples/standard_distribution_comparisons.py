@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 '''
 This example illustrates the failure of traditional statistical
@@ -12,17 +12,22 @@ sampled from a gaussian.
 
 import collections
 
+import logging
 import numpy
 import pylab
 import scipy.optimize
 import scipy.stats
 
-import voka.metrics.chisq
+# What's the difference here between voka.metrics.chisq
+# and scipy.stats.chisquare ?
+#import voka.metrics.chisq
+import scipy.stats
 
 histograms = dict()
 N_HISTOGRAMS = 1000
 BINS = 50
 SIZE = 1000
+print("Generating histograms...")
 for i in range(N_HISTOGRAMS):
     data = numpy.random.uniform(low=-5, high=5, size=SIZE)
     histograms['Uniform%d' % i] = numpy.histogram(data, bins=BINS)
@@ -41,28 +46,35 @@ for i in range(N_HISTOGRAMS):
     histograms['Exponential%d' % i] = numpy.histogram(data, bins=BINS)
 
 T_dist = collections.defaultdict(list)
-test_stat = voka.metrics.chisq.NormChiSq()
+#test_stat = voka.metrics.chisq.NormChiSq()
+test_stat = scipy.stats.chisquare
+print("Comparing histograms...")
 for i in range(N_HISTOGRAMS):
     for j in range(i+1, N_HISTOGRAMS):
         h1 = histograms["Uniform%d" % i][0]
         h2 = histograms["Uniform%d" % j][0]
-        T_dist['uniform'].append(test_stat(h1, h2))
+        #T_dist['uniform'].append(test_stat(h1, h2))
+        T_dist['uniform'].append(test_stat(h1, h2)[0])
 
         h1 = histograms["ChiSq5%d" % i][0]
         h2 = histograms["ChiSq5%d" % j][0]
-        T_dist['chisq'].append(test_stat(h1, h2))
+        #T_dist['chisq'].append(test_stat(h1, h2))
+        T_dist['chisq'].append(test_stat(h1, h2)[0])
 
         h1 = histograms["Exponential%d" % i][0]
         h2 = histograms["Exponential%d" % j][0]
-        T_dist['exponential'].append(test_stat(h1, h2))
+        #T_dist['exponential'].append(test_stat(h1, h2))
+        T_dist['exponential'].append(test_stat(h1, h2)[0])
 
         h1 = histograms["Gaussian%d" % i][0]
         h2 = histograms["Gaussian%d" % j][0]
-        T_dist['gaussian'].append(test_stat(h1, h2))
+        #T_dist['gaussian'].append(test_stat(h1, h2))
+        T_dist['gaussian'].append(test_stat(h1, h2)[0])
 
         h1 = histograms["BiGaussian%d" % i][0]
         h2 = histograms["BiGaussian%d" % j][0]
-        T_dist['bigaussian'].append(test_stat(h1, h2))
+        #T_dist['bigaussian'].append(test_stat(h1, h2))
+        T_dist['bigaussian'].append(test_stat(h1, h2)[0])
 
 pylab.figure(1)
 pylab.subplot(231)

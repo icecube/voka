@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 '''
 This example illustrates the failure of traditional statistical
@@ -14,7 +14,7 @@ import pylab
 import scipy.optimize
 import scipy.stats
 
-import voka.metrics.chisq
+import voka.metrics
 
 histograms = dict()
 N_HISTOGRAMS = 100
@@ -32,7 +32,7 @@ for i in range(N_HISTOGRAMS):
 
 charge_T_dist = list()
 time_T_dist = list()
-test_stat = voka.metrics.chisq.NormChiSq()
+test_stat = voka.metrics.norm_chisq
 
 NDOF = None
 for i in range(N_HISTOGRAMS):
