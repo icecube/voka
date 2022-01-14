@@ -1,5 +1,12 @@
 # voka
-Sanity checks on sequences/histograms using unsupervised machine learning.
+Sanity checks on histograms using unsupervised machine learning.
+
+## Problem Statement
+Let's say you have a large number of histograms produced by a complex system (e.g. scientific simulation chain 
+for a large-scale physics experiment) and you want to compare one large set of histograms to another to determine 
+differences.  When the number of histograms becomes large (>100) it can be difficult for human observers to 
+efficiently scan them for subtle differences buried in statistical flucuations.  The project is a tool that
+can help detect those differences.
 
 # Dependencies
 
