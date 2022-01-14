@@ -12,7 +12,7 @@ can help detect those differences.
 
 * numpy
 * matplotlib
-* scipy
+* scipy (optional)
 
 ```
    numpy (basic_example,classic_fit_example,standard_distribution_comparisons,stochastic_example,test.test_lof,test.test_metrics,test.test_voka,vanilla_gaussian,voka.lof)
