@@ -61,6 +61,7 @@ TOTAL                        207     25    88%
 ```sh
 $ python3 -m unittest
 $ coverage run --source=voka -m unittest
+$ coverage report -m
 ```
 
 # Introduction
