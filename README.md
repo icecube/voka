@@ -69,7 +69,7 @@ or private cluster, application execution represents a significant cost of time,
 (CI) systems have been around for a while as the first stage of code validation.  More recently Continuous Delivery (CD) 
 ystems have become more popular, as a means to autonomously deliver validated software.  A new stage in this pipeline is 
 emerging, called Continuous Benchmarking (CB) that attempts to look beyond traditional unit and integration tests common 
-to all CI/CD systems.  The technique presented is currently being used by IceCube in a nightly CI/CD/CB system to validate 
+to all CI/CD systems.  The technique presented is currently being used by IceCube in a nightly CI/CD/CB/CV system to validate 
 its physics codebase before release and subsequent petabyte-scale mass production.
 
 The method described here was inspired by F. Porter's paper[1] describing various methods to test the consistency of two 
