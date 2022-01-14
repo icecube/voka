@@ -37,6 +37,7 @@ can help detect those differences.
 
 
 # Test Coverage
+Measured with [coverage](https://coverage.readthedocs.io/en/6.2/).
 
 As of January 14th, 2022:
 ```
