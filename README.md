@@ -38,23 +38,18 @@ can help detect those differences.
 
 # Test Coverage
 
-As of June 23rd, 2020:
+As of January 14th, 2022:
 ```
-Name                       Stmts   Miss  Cover
-----------------------------------------------
-voka/__init__.py               0      0   100%
-voka/compare.py               16      2    88%
-voka/lof.py                   20      0   100%
-voka/metrics/__init__.py       0      0   100%
-voka/metrics/ad.py            29      2    93%
-voka/metrics/bdm.py           13      1    92%
-voka/metrics/chisq.py         21      4    81%
-voka/metrics/cvm.py           19      1    95%
-voka/metrics/ks.py            12      1    92%
-voka/metrics/llh.py           47     10    79%
-voka/model.py                 30      4    87%
-----------------------------------------------
-TOTAL                        207     25    88%
+Name                 Stmts   Miss  Cover   Missing
+--------------------------------------------------
+voka/__init__.py         0      0   100%
+voka/compare.py         12      2    83%   37-38
+voka/lof.py             26      0   100%
+voka/metrics.py        115     17    85%   39-42, 60, 80, 89, 113, 141, 154, 162-163, 165-166, 168-169, 184
+voka/model.py           36      6    83%   78-87
+voka/two_sample.py      38     38     0%   2-90
+--------------------------------------------------
+TOTAL                  227     63    72%
 ```
 
 ## Running Tests
