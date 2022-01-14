@@ -86,7 +86,7 @@ The method presented here uses traditional test statistics, such as Chi^2, KS, A
 ### Getting Started
 
 # References
-[1] F. Porter "Testing the Consistency of Two Histograms" (https://arxiv.org/abs/0804.0380) 
-[2] G. Cowen "Statistical Data Analysis"
-[3] The IceCube Collaboration "In-situ calibration of the single-photoelectron charge response of the IceCube photomultiplier tubes" (https://arxiv.org/abs/2002.00997)
-[4] M. Dunsch, J. Soedinggresko, A. Sandrock, M. Meier, T. Menne, W. Rhode "Recent Improvements for the Lepton Propagator PROPOSAL" (https://arxiv.org/abs/1809.07740)
+- [1] F. Porter "Testing the Consistency of Two Histograms" (https://arxiv.org/abs/0804.0380) 
+- [2] G. Cowen "Statistical Data Analysis"
+- [3] The IceCube Collaboration "In-situ calibration of the single-photoelectron charge response of the IceCube photomultiplier tubes" (https://arxiv.org/abs/2002.00997)
+- [4] M. Dunsch, J. Soedinggresko, A. Sandrock, M. Meier, T. Menne, W. Rhode "Recent Improvements for the Lepton Propagator PROPOSAL" (https://arxiv.org/abs/1809.07740)
