@@ -6,9 +6,9 @@ import pylab
 def draw(sample, title=None, color = "green", ylim = None, log = False, yerr = None):
     r"""Make a matplotlib figure of a sample.
     Arguments:
+        title : Plot title. 
         color : matplotlib color string
             Color of the histogram area.
-        title : Plot title. 
         ylim : None or (float, float)
             Axis limits (ymin, ymax). If None, use 0.1 margin around data.
         log : bool
