@@ -11,7 +11,6 @@ sampled from a gaussian.
 
 import numpy
 import pylab
-import scipy.optimize
 import scipy.stats
 
 import voka.metrics
