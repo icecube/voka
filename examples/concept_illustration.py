@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 '''
-This example illustrates the basic concept of this project,
+This example illustrates the basic concept of this method,
 showing that comparing two histograms using traditional methods
 with a p-value threshold is unstable for non-poissonian 
 distributions.
