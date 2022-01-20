@@ -1,4 +1,13 @@
+import pathlib
+import pkg_resources
 from setuptools import setup
+
+with pathlib.Path('requirements.txt').open() as requirements_txt:
+    requirements = [
+        str(requirement)
+        for requirement
+        in pkg_resources.parse_requirements(requirements_txt)
+    ]
 
 setup(
     name='voka',
@@ -9,16 +18,7 @@ setup(
     author_email='alex.r.olivas@gmail.com',
     license='MIT',
     packages=['voka'],
-    install_requires=[
-        'cycler==0.10.0',
-        'kiwisolver==1.1.0',
-        'matplotlib==3.2.0',
-        'numpy==1.21.0',
-        'pyparsing==2.4.6',
-        'python-dateutil==2.8.1',
-        'six==1.14.0'
-    ],
-
+    install_requires=requirements,
     classifiers=[
         'Development Status :: 1 - Planning',
         'Intended Audience :: Science/Research',
