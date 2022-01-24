@@ -1,5 +1,5 @@
 # voka
-Sanity checks on histograms using unsupervised machine learning.
+Histograms comparisons using statistical tests as input to an outlier detection algorithm.
 
 ## Problem Statement
 Let's say you have a large number of histograms produced by a complex system (e.g. scientific simulation chain 
