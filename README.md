@@ -8,6 +8,9 @@ differences.  When the number of histograms becomes large (>100) it can be diffi
 efficiently scan them for subtle differences buried in statistical flucuations.  The project is a tool that
 can help detect those differences.
 
+**This method can be viewed as emperically determining a p-value threshold from benchmark sets, valid for both 
+discrete  and continuous distributions, and both Poissonian and non-Poissonian statistics.**
+
 # Dependencies
 
 * numpy
