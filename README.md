@@ -11,6 +11,8 @@ can help detect those differences.
 **This method can be viewed as emperically determining a p-value threshold from benchmark sets, valid for both 
 discrete  and continuous distributions, and both Poissonian and non-Poissonian statistics.**
 
+See the [wiki](https://github.com/icecube/voka/wiki) for more details.
+
 # Dependencies
 
 * numpy
