@@ -17,6 +17,7 @@ available from scipy:
 
 import os
 import pickle
+import collections
 
 import numpy
 import pylab
@@ -28,6 +29,8 @@ import voka.model
 import voka.tools.render
 
 def voka_2sample(sample1, sample2):
+    print(sample1, sample2)
+    
     # Checkout OnlineL2_SplitTime2_SPE2itFitEnergy
     # hiccup #1 (AD) ValueError: anderson_ksamp needs more than one distinct observation
     # hiccup #2 (ES) numpy.linalg.LinAlgError: SVD did not converge
@@ -126,56 +129,47 @@ def voka_2sample(sample1, sample2):
 
 # make two samples containing
 # 'standard' numpy distributions
-_range = (-5,5)
-widths = [w+0.1 for w in numpy.arange(0.1, 2.0, 0.1)]
-locs = [l+0.1 for l in numpy.arange(-.5, 0.5, 0.1)]
-size = 100
-test_samples_low = list()
-test_samples_high = list()
-#test_samples = [numpy.histogram(
-#                for w in widths]
-#for w in widths:
-#    d = numpy.random.normal(size=1000, scale=w)
-#    # need to make sure the binning is the same
-#    h = numpy.histogram(d, range=_range)
-#    test_samples.append(h[0])
-    
-for l in locs:
-    d_low = numpy.random.normal(size=100, loc=l)
-    d_high = numpy.random.normal(size=1000, loc=l)
-    # need to make sure the binning is the same
-    h_low = numpy.histogram(d_low, range=_range)
-    h_high = numpy.histogram(d_high, range=_range)
-    test_samples_low.append(h_low[0])
-    test_samples_high.append(h_high[0])
-    
-benchmark_samples = [numpy.histogram(numpy.random.normal(size=size, scale=1.0),
-                                     range=_range)[0]
-                     for _ in range(10)]
+locs = [l+0.1 for l in numpy.arange(-2.0, 2.0, 0.1)]
+test_samples = list()
 
-model = voka.model.Voka()
+def gaussian_sample(loc=0.0, size=1000):
+    RANGE = (-5,5)
+    SCALE = 1.0
+    return numpy.histogram(numpy.random.normal(size=size, scale=SCALE, loc=loc),
+                           range=RANGE)[0]
+
+test_samples = [gaussian_sample(loc=loc) for loc in locs]
+test_samples_low = [gaussian_sample(loc=loc, size=100) for loc in locs]
+benchmark_samples = [gaussian_sample(size=100) for _ in range(10)]                     
 reference_collection = {"Benchmark%d" % idx : {"Gaussian":s}
                         for idx, s in enumerate(benchmark_samples)}
+model = voka.model.Voka()
 model.train(reference_collection)
 
-for idx, (test_sample_low, test_sample_high) \
-    in enumerate(zip(test_samples_low, test_samples_high)):
-    print(test_sample_low)
-    print(test_sample_high)
-    print(80*"-")
-    #print("width = %.2f" % widths[idx])
+results = collections.defaultdict(list)
+for idx, test_sample in enumerate(test_samples):
+
     print("loc = %.2f" % locs[idx])
-    benchmark_sample = numpy.histogram(numpy.random.normal(size=1000, scale=1.0))[0]
-    voka_2samp_result = voka_2sample(test_sample_high, benchmark_sample)
+    benchmark_sample = gaussian_sample()
+    voka_2samp_result = voka_2sample(test_sample, benchmark_sample)
     for name, result in voka_2samp_result.items():
         if 'pvalue' in result:
-            print("  %s p-value = %.4f" % (name, result['pvalue']))
+            #print("  %s p-value = %.4f" % (name, result['pvalue']))
+            results[name].append(result['pvalue'])
     
-    # I need to fix this.
-    # The test labels and the benchmark labels need to match exactly.
-    voka_ksamp_result = model.execute({"Gaussian" : test_sample_low})
+    voka_ksamp_result = model.execute({"Gaussian" : test_samples_low[idx]})
     r = model.results(voka_ksamp_result)['Gaussian']
     print("%s lof = %.2f threshold = %.2f" % (r['pass'], r['lof'], r['threshold']))
-    voka.tools.render.draw_comparisons(test_sample_low, benchmark_samples)
-    pylab.show()
+    results['voka'].append(r['lof'])
+    #pylab.figure()
+    #voka.tools.render.draw_comparisons(test_sample, benchmark_samples)
+    #pylab.show()
+
+
+pylab.figure()
+for name, result in results.items():
+    pylab.plot(locs, result, label=name)
+
+pylab.legend()
+pylab.show()
     
