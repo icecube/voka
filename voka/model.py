@@ -5,7 +5,40 @@ The model module currently consists solely of the Voka class.
 import math
 import collections
 import voka.lof
+        
+def average_lof(test_sequence, benchmark_sequences):
+    
+    # this is a list of statistical test points
+    reference_cluster = list()
+    for idx in range(len(benchmark_sequences)-1):
+        for jdx in range(idx, len(benchmark_sequences)):
+            s0 = benchmark_sequences[idx]
+            s1 = benchmark_sequences[jdx]
+            c = voka.metrics.shape_chisq(s0, s1)
+            a = voka.metrics.anderson_darling(s0, s1)    
+            p = (c,a)
+            reference_cluster.append(p)
 
+    test_cluster = list()
+    for s1 in benchmark_sequences:
+        s0 = test_sequence
+        c = voka.metrics.shape_chisq(s0, s1)
+        a = voka.metrics.anderson_darling(s0, s1)
+        p = (c,a)        
+        test_cluster.append(p)
+
+    print('calculating...')
+    # now calculate local outlier factors
+    k = 3
+    lofs = list()
+    print(len(test_cluster))
+    print(len(reference_cluster))    
+    for test_point in test_cluster:
+        lofs.append(voka.lof.local_outlier_factor(test_point, k, reference_cluster))
+    average_lof = sum(lofs)/float(len(lofs))
+    return (average_lof, test_cluster, reference_cluster)
+        
+        
 class Voka:
     '''
     Class to handle determination of the outlier detection thresholds
@@ -29,9 +62,13 @@ class Voka:
         '''
         Calculate LOF thresholds from the reference set.
         '''
+
+        # there should be a transformation of the reference collection here
+        # involving a comparison using statistical tests
+        
         self.__reference_collection = reference_collection
         self.__k = k
-
+    
         # we use each one as a test and the others
         # as a benchmark set and determine the
         lof_values = collections.defaultdict(list)
@@ -63,6 +100,10 @@ class Voka:
                 if test_key in ref_set:
                     reference_sequences.append(ref_set[test_key])
 
+            # the transformation has to happen here
+            # we have a single test_sequence and we have
+            # reference sequences
+                    
             lof = voka.lof.local_outlier_factor(test_sequence,
                                                 self.__k,
                                                 reference_sequences)
