@@ -189,7 +189,7 @@ if __name__ == '__main__':
     print(80*'-')
     figure_number = 1
 
-    pvalues_width_systematic = collections.defaultdict(list)
+    pvalues_width_systematic: dict = collections.defaultdict(list)
     for idx, systematic_width in enumerate(widths):
         #print('width = %.4f' % systematic_width)
         systematic_distribution = numpy.random.normal(loc=benchmark_center,
@@ -235,6 +235,7 @@ if __name__ == '__main__':
 
     print(80*'-')
     pvalues_center_systematic = collections.defaultdict(list)
+    pvalues_center_systematic: dict = collections.defaultdict(list)
     for idx, systematic_center in enumerate(centers):
         #print('center = %.4f' % systematic_center)
         systematic_distribution = numpy.random.normal(loc=systematic_center,
@@ -279,7 +280,7 @@ if __name__ == '__main__':
     print(80*'-')
     pylab.figure(figure_number)
     figure_number += 1
-    pvalues_size_systematic = collections.defaultdict(list)
+    pvalues_size_systematic: dict = collections.defaultdict(list)
     for systematic_size in sizes:
         #print('size = %d' % int(systematic_size))
         systematic_distribution = numpy.random.normal(loc=benchmark_center,
