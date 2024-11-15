@@ -112,7 +112,7 @@ jobs:
         with:
           password: ${{ secrets.PYPI_TOKEN }}
       # GitHub Release
-      - uses: python-semantic-release/upload-to-gh-release@v9.14.0
+      - uses: python-semantic-release/upload-to-gh-release@v9.8.9
         if: steps.psr-psr.outputs.released == 'true'
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
