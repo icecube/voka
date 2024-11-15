@@ -83,7 +83,7 @@ jobs:
       - name: Setup Dependencies
         run: |
           pip install --upgrade pip wheel setuptools
-          pip install .
+          pip install .[tests]
       - run: |
           python -m pytest test
 
