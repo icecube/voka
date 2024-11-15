@@ -1,8 +1,9 @@
+
 import numpy
 import scipy.stats  # type: ignore[import]
 
-
 def traditional(sample1, sample2):
+
     # hiccup #1 (AD) ValueError: anderson_ksamp needs more than one distinct observation
     # hiccup #2 (ES) numpy.linalg.LinAlgError: SVD did not converge
     # hiccup #3 (TT) Ttest_indResult(statistic=nan, pvalue=nan)
@@ -31,7 +32,7 @@ def traditional(sample1, sample2):
             'pvalue': r.pvalue
         }
     except numpy.linalg.LinAlgError:
-        # print("    skipping epps_singleton_2samp")
+        #print("    skipping epps_singleton_2samp")
         pass
 
     try:
@@ -41,7 +42,7 @@ def traditional(sample1, sample2):
             'pvalue': r.pvalue
         }
     except ValueError:
-        # print("    skipping mannwhitneyu")
+        #print("    skipping mannwhitneyu")
         pass
 
     r = scipy.stats.ranksums(sample1, sample2)
@@ -57,7 +58,7 @@ def traditional(sample1, sample2):
             'pvalue': r.pvalue
         }
     except ValueError:
-        # print("    skipping wilcoxon")
+        #print("    skipping wilcoxon")
         pass
 
     try:
@@ -67,7 +68,7 @@ def traditional(sample1, sample2):
             'pvalue': r.pvalue
         }
     except:
-        # print("    skipping kruskal")
+        #print("    skipping kruskal")
         pass
 
     try:
@@ -77,7 +78,7 @@ def traditional(sample1, sample2):
             'pvalue': r.pvalue
         }
     except ValueError:
-        # print("    skipping friedmanchisquare")
+        #print("    skipping friedmanchisquare")
         pass
 
     r = scipy.stats.brunnermunzel(sample1, sample2)

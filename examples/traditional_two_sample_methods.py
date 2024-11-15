@@ -23,7 +23,6 @@ import scipy.stats  # type: ignore[import]
 
 import voka.tools.render
 
-
 # Low p-value is bad here.
 # The null hypothesis H_0 is that the two samples
 # were sampled from the same underlying distribution.
@@ -116,14 +115,14 @@ def voka_2sample(sample1, sample2):
     except:
         print("    skipping kruskal")
 
-    #    try:
-    #        r = scipy.stats.friedmanchisquare(sample1, sample2)
-    #        result['FriedmanChiSquare'] = {
-    #            'statistic': r.statistic,
-    #            'pvalue': r.pvalue
-    #        }
-    #    except ValueError:
-    #        print("    skipping friedmanchisquare")
+#    try:
+#        r = scipy.stats.friedmanchisquare(sample1, sample2)
+#        result['FriedmanChiSquare'] = {
+#            'statistic': r.statistic,
+#            'pvalue': r.pvalue
+#        }
+#    except ValueError:
+#        print("    skipping friedmanchisquare")
 
     r = scipy.stats.brunnermunzel(sample1, sample2)
     result['BrunnerMunzel'] = {
@@ -133,13 +132,11 @@ def voka_2sample(sample1, sample2):
 
     return result
 
-
 DENSITY = True
-
 
 def compare(benchmark_distribution, systematic_distribution, pvalues, density=False):
     # Use the same histogram settings for each.
-    _range = (-5, 5)
+    _range = (-5,5)
     _bins = 100
 
     # First histogram to make samples
@@ -157,7 +154,6 @@ def compare(benchmark_distribution, systematic_distribution, pvalues, density=Fa
     for k, v in comparison.items():
         pvalues[k].append(v['pvalue'])
 
-
 if __name__ == '__main__':
 
     # Tests to perform
@@ -170,32 +166,32 @@ if __name__ == '__main__':
     benchmark_center = 0.0
     benchmark_size = 100000
 
-    widths = numpy.arange(0.5 * benchmark_width,
-                          1.5 * benchmark_width,
+    widths = numpy.arange(0.5*benchmark_width,
+                          1.5*benchmark_width,
                           0.001)
 
     centers = numpy.arange(-0.5,
                            0.5,
                            0.001)
 
-    sizes = numpy.arange(0.5 * benchmark_size,
-                         1.5 * benchmark_size,
+    sizes = numpy.arange(0.5*benchmark_size,
+                         1.5*benchmark_size,
                          10)
 
-    draw_width_idx = int(0.9 * len(widths))
-    draw_center_idx = int(0.9 * len(centers))
+    draw_width_idx = int(0.9*len(widths))
+    draw_center_idx = int(0.9*len(centers))
 
     benchmark_distribution = numpy.random.normal(loc=benchmark_center,
                                                  scale=benchmark_width,
                                                  size=benchmark_size)
 
     # Generate systematic distributions
-    print(80 * '-')
+    print(80*'-')
     figure_number = 1
 
-    pvalues_width_systematic: dict = collections.defaultdict(list)
+    pvalues_width_systematic = collections.defaultdict(list)
     for idx, systematic_width in enumerate(widths):
-        # print('width = %.4f' % systematic_width)
+        #print('width = %.4f' % systematic_width)
         systematic_distribution = numpy.random.normal(loc=benchmark_center,
                                                       scale=systematic_width,
                                                       size=benchmark_size)
@@ -207,7 +203,7 @@ if __name__ == '__main__':
         if idx == draw_width_idx:
             print('width = %.4f' % systematic_width)
             # Use the same histogram settings for each.
-            _range = (-5, 5)
+            _range = (-5,5)
             _bins = 100
 
             # First histogram to make samples
@@ -224,6 +220,7 @@ if __name__ == '__main__':
             figure_number += 1
             voka.tools.render.draw_ratio(systematic_sample, benchmark_sample)
 
+
     pylab.figure(figure_number)
     figure_number += 1
     for label, pvs in pvalues_width_systematic.items():
@@ -236,10 +233,10 @@ if __name__ == '__main__':
     pylab.xlabel('width')
     pylab.ylabel('log(p-value)')
 
-    print(80 * '-')
-    pvalues_center_systematic: dict = collections.defaultdict(list)
+    print(80*'-')
+    pvalues_center_systematic = collections.defaultdict(list)
     for idx, systematic_center in enumerate(centers):
-        # print('center = %.4f' % systematic_center)
+        #print('center = %.4f' % systematic_center)
         systematic_distribution = numpy.random.normal(loc=systematic_center,
                                                       scale=benchmark_width,
                                                       size=benchmark_size)
@@ -251,7 +248,7 @@ if __name__ == '__main__':
         if idx == draw_center_idx:
             print('center = %.4f' % systematic_center)
             # Use the same histogram settings for each.
-            _range = (-5, 5)
+            _range = (-5,5)
             _bins = 100
 
             # First histogram to make samples
@@ -279,12 +276,12 @@ if __name__ == '__main__':
     pylab.xlabel('center')
     pylab.ylabel('log(p-value)')
 
-    print(80 * '-')
+    print(80*'-')
     pylab.figure(figure_number)
     figure_number += 1
-    pvalues_size_systematic: dict = collections.defaultdict(list)
+    pvalues_size_systematic = collections.defaultdict(list)
     for systematic_size in sizes:
-        # print('size = %d' % int(systematic_size))
+        #print('size = %d' % int(systematic_size))
         systematic_distribution = numpy.random.normal(loc=benchmark_center,
                                                       scale=benchmark_width,
                                                       size=int(systematic_size))

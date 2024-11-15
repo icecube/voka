@@ -35,7 +35,7 @@ test_stat = voka.metrics.norm_chisq
 
 NDOF = None
 for i in range(N_HISTOGRAMS):
-    for j in range(i + 1, N_HISTOGRAMS):
+    for j in range(i+1, N_HISTOGRAMS):
         ch1 = histograms["ChargeHistogram%d" % i][0]
         ch2 = histograms["ChargeHistogram%d" % j][0]
         th1 = histograms["TimeHistogram%d" % i][0]

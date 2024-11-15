@@ -18,15 +18,15 @@ available from scipy:
 import collections
 import subprocess
 
-import matplotlib  # type: ignore[import]
 import numpy
-import pylab  # type: ignore[import]
 import scipy.stats  # type: ignore[import]
+import pylab  # type: ignore[import]
+import matplotlib  # type: ignore[import]
 
 import voka.model
+import voka.metrics
 
 matplotlib.use('agg')
-
 
 def voka_2sample(sample1, sample2):
     print(sample1, sample2)
@@ -60,7 +60,7 @@ def voka_2sample(sample1, sample2):
             'significance_level': r.significance_level
         }
     except ValueError:
-        # print("    skipping anderson_ksamp")
+        #print("    skipping anderson_ksamp")
         pass
 
     try:
@@ -70,7 +70,7 @@ def voka_2sample(sample1, sample2):
             'pvalue': r.pvalue
         }
     except numpy.linalg.LinAlgError:
-        # print("    skipping epps_singleton_2samp")
+        #print("    skipping epps_singleton_2samp")
         pass
 
     try:
@@ -80,7 +80,7 @@ def voka_2sample(sample1, sample2):
             'pvalue': r.pvalue
         }
     except ValueError:
-        # print("    skipping mannwhitneyu")
+        #print("    skipping mannwhitneyu")
         pass
 
     r = scipy.stats.ranksums(sample1, sample2)
@@ -96,7 +96,7 @@ def voka_2sample(sample1, sample2):
             'pvalue': r.pvalue
         }
     except ValueError:
-        # print("    skipping wilcoxon")
+        #print("    skipping wilcoxon")
         pass
 
     try:
@@ -106,7 +106,7 @@ def voka_2sample(sample1, sample2):
             'pvalue': r.pvalue
         }
     except:
-        # print("    skipping kruskal")
+        #print("    skipping kruskal")
         pass
 
     try:
@@ -116,7 +116,7 @@ def voka_2sample(sample1, sample2):
             'pvalue': r.pvalue
         }
     except ValueError:
-        # print("    skipping friedmanchisquare")
+        #print("    skipping friedmanchisquare")
         pass
 
     r = scipy.stats.brunnermunzel(sample1, sample2)
@@ -127,18 +127,15 @@ def voka_2sample(sample1, sample2):
 
     return result
 
-
 # make two samples containing
 # 'standard' numpy distributions
 locs = numpy.arange(-0.25, 0.25, 0.01)
 
-
 def gaussian_sample(loc=0.0, size=1000):
-    RANGE = (-5, 5)
+    RANGE = (-5,5)
     SCALE = 1.0
     return numpy.histogram(numpy.random.normal(size=size, scale=SCALE, loc=loc),
                            range=RANGE)[0]
-
 
 unbinned_test_samples = [numpy.random.normal(size=1000, scale=1.0, loc=loc)
                          for loc in locs]
@@ -165,8 +162,8 @@ for idx, test_sample in enumerate(unbinned_test_samples):
     pylab.title('gaussian pull = %f' % locs[idx])
     pylab.xlabel('chisq')
     pylab.ylabel('AD')
-    pylab.xlim(0, 50)
-    pylab.ylim(0, 50)
+    pylab.xlim(0,50)
+    pylab.ylim(0,50)
     pylab.plot([p[0] for p in test_cluster],
                [p[1] for p in test_cluster],
                marker)
@@ -186,7 +183,7 @@ subprocess.run(cmd)
 
 pylab.figure()
 for name, result in results.items():
-    if name == 'voka':
+    if name=='voka':
         continue
     pylab.plot(locs, result, label=name)
 pylab.title('Unbinned 2-sample Tests')
@@ -209,4 +206,4 @@ pylab.legend()
 # #    for jdx in range(idx+1, len(benchmark_samples)):
 # #        benchmark_x = voka.metric.shape_chisq(,)
 #
-# pylab.show()
+#pylab.show()
