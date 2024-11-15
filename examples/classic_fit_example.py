@@ -5,8 +5,8 @@ Example illustrating the classic method, meaning fitting by hand.
 '''
 
 import numpy
-import pylab
-import scipy.optimize
+import pylab  # type: ignore[import]
+import scipy.optimize  # type: ignore[import]
 
 # Histogram the arrival time, expected to be gaussian, of the charge
 # sampled from a gaussian.
@@ -19,15 +19,17 @@ for time in pe_time_dist:
     for c in range(int(charge)):
         data.append(time)
 
+
 def gauss(x, *p):
     '''
     The gaussian distribution.
     '''
     amplitude, mean, sigma = p
-    return amplitude*numpy.exp(-(x-mean)**2/(2.*sigma**2))
+    return amplitude * numpy.exp(-(x - mean) ** 2 / (2. * sigma ** 2))
+
 
 hist, bin_edges = numpy.histogram(data)
-bin_centers = (bin_edges[:-1] + bin_edges[1:])/2
+bin_centers = (bin_edges[:-1] + bin_edges[1:]) / 2
 p0 = [1000., 0., 1.]
 p1 = [1000., 0., 1.]
 print(hist)
