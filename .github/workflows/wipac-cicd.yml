@@ -4,10 +4,6 @@ on: [ push ]
 
 jobs:
 
-  ###########################################################################
-  # LINTERS
-  ###########################################################################
-
   py-versions:
     runs-on: ubuntu-latest
     outputs:
@@ -16,6 +12,10 @@ jobs:
       - uses: actions/checkout@v4
       - id: versions
         uses: WIPACrepo/wipac-dev-py-versions-action@v2.5
+
+  ###########################################################################
+  # LINTERS
+  ###########################################################################
 
   flake8:
     needs: [ py-versions ]
@@ -44,6 +44,24 @@ jobs:
         with:
           python-version: ${{ matrix.py3 }}
       - uses: WIPACrepo/wipac-dev-mypy-action@v2.0
+
+  ###########################################################################
+  # PACKAGING
+  ###########################################################################
+
+  py-setup:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+      - uses: WIPACrepo/wipac-dev-py-setup-action@v4.1
+        with:
+          python_min: 3.9
+          pypi_name: icecube-voka
+          author: IceCube
+          author_email: developers@icecube.wisc.edu
+          keywords: "histogram comparison" "outlier detection" "statistical tests" "empirical p-value threshold" "poissonian statistics"
 
   ###########################################################################
   # TESTS
@@ -75,16 +93,25 @@ jobs:
   release:
     # only run on main/master/default
     if: format('refs/heads/{0}', github.event.repository.default_branch) == github.ref
-    needs: [ flake8, mypy, tests ]
+    needs: [ flake8, mypy, py-setup, tests ]
     runs-on: ubuntu-latest
-    concurrency: release
+    concurrency: release  # prevent any possible race conditions
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - name: Python Semantic Release
-        uses: python-semantic-release/python-semantic-release@v7.34.6
+      # Python-Package Version Bump
+      - uses: python-semantic-release/python-semantic-release@v9.14.0
+        id: psr-psr
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          repository_username: __token__
-          repository_password: ${{ secrets.PYPI_TOKEN }}
+      # PyPI Release
+      - uses: pypa/gh-action-pypi-publish@v1.12.2
+        if: steps.psr-psr.outputs.released == 'true'
+        with:
+          password: ${{ secrets.PYPI_TOKEN }}
+      # GitHub Release
+      - uses: python-semantic-release/upload-to-gh-release@v9.14.0
+        if: steps.psr-psr.outputs.released == 'true'
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
