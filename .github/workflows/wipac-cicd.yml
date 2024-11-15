@@ -61,7 +61,8 @@ jobs:
           pypi_name: icecube-voka
           author: IceCube
           author_email: developers@icecube.wisc.edu
-          keywords: "histogram comparison" "outlier detection" "statistical tests" "empirical p-value threshold" "poissonian statistics"
+          keywords: |
+            "histogram comparison" "outlier detection" "statistical tests" "empirical p-value threshold" "poissonian statistics"
 
   ###########################################################################
   # TESTS
