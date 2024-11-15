@@ -55,7 +55,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-      - uses: WIPACrepo/wipac-dev-py-setup-action@v4.1
+      - uses: WIPACrepo/wipac-dev-py-setup-action@migration-fix
         with:
           python_min: 3.9
           pypi_name: icecube-voka
