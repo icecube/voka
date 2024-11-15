@@ -14,7 +14,6 @@ import collections
 
 import numpy
 import pylab  # type: ignore[import]
-
 # What's the difference here between voka.metrics.chisq
 # and scipy.stats.chisquare ?
 # import voka.metrics.chisq
