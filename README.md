@@ -1,3 +1,6 @@
+<!--- Top of README Badges (automated) --->
+[![PyPI](https://img.shields.io/pypi/v/icecube-voka)](https://pypi.org/project/icecube-voka/) [![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/icecube/voka?include_prereleases)](https://github.com/icecube/voka/) [![Versions](https://img.shields.io/pypi/pyversions/icecube-voka.svg)](https://pypi.org/project/icecube-voka) [![PyPI - License](https://img.shields.io/pypi/l/icecube-voka)](https://github.com/icecube/voka/blob/main/LICENSE) [![GitHub issues](https://img.shields.io/github/issues/icecube/voka)](https://github.com/icecube/voka/issues?q=is%3Aissue+sort%3Aupdated-desc+is%3Aopen) [![GitHub pull requests](https://img.shields.io/github/issues-pr/icecube/voka)](https://github.com/icecube/voka/pulls?q=is%3Apr+sort%3Aupdated-desc+is%3Aopen)
+<!--- End of README Badges (automated) --->
 # voka
 Histograms comparisons using statistical tests as input to an outlier detection algorithm.
 
