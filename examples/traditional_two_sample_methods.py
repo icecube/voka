@@ -233,8 +233,7 @@ if __name__ == '__main__':
     pylab.xlabel('width')
     pylab.ylabel('log(p-value)')
 
-    print(80*'-')
-    pvalues_center_systematic = collections.defaultdict(list)
+    print(80 * '-')
     pvalues_center_systematic: dict = collections.defaultdict(list)
     for idx, systematic_center in enumerate(centers):
         #print('center = %.4f' % systematic_center)
