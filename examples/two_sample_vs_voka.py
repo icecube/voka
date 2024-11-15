@@ -15,27 +15,22 @@ available from scipy:
 * scipy.stats.brunnermunzel
 '''
 
-import os
-import pickle
 import collections
 import subprocess
 
 import numpy
-import pylab
-import scipy.stats
-import pylab
-import matplotlib
+import scipy.stats  # type: ignore[import]
+import pylab  # type: ignore[import]
+import matplotlib  # type: ignore[import]
 
-import voka.tools.samples
 import voka.model
-import voka.tools.render
 import voka.metrics
 
 matplotlib.use('agg')
 
 def voka_2sample(sample1, sample2):
     print(sample1, sample2)
-    
+
     # Checkout OnlineL2_SplitTime2_SPE2itFitEnergy
     # hiccup #1 (AD) ValueError: anderson_ksamp needs more than one distinct observation
     # hiccup #2 (ES) numpy.linalg.LinAlgError: SVD did not converge
@@ -51,13 +46,13 @@ def voka_2sample(sample1, sample2):
         'statistic': r.statistic,
         'pvalue': r.pvalue
     }
-    
+
     r = scipy.stats.ks_2samp(sample1, sample2)
     result['KolmogorovSmirnov'] = {
         'statistic': r.statistic,
         'pvalue': r.pvalue
     }
-    
+
     try:
         r = scipy.stats.anderson_ksamp([sample1, sample2])
         result['AndersonDarling'] = {
@@ -67,7 +62,7 @@ def voka_2sample(sample1, sample2):
     except ValueError:
         #print("    skipping anderson_ksamp")
         pass
-        
+
     try:
         r = scipy.stats.epps_singleton_2samp(sample1, sample2)
         result['EppsSingleton'] = {
@@ -87,7 +82,7 @@ def voka_2sample(sample1, sample2):
     except ValueError:
         #print("    skipping mannwhitneyu")
         pass
-        
+
     r = scipy.stats.ranksums(sample1, sample2)
     result['Ranksums'] = {
         'statistic': r.statistic,
@@ -109,7 +104,7 @@ def voka_2sample(sample1, sample2):
         result['Kruskal'] = {
             'statistic': r.statistic,
             'pvalue': r.pvalue
-        }        
+        }
     except:
         #print("    skipping kruskal")
         pass
@@ -119,16 +114,16 @@ def voka_2sample(sample1, sample2):
         result['FriedmanChiSquare'] = {
             'statistic': r.statistic,
             'pvalue': r.pvalue
-        }        
+        }
     except ValueError:
         #print("    skipping friedmanchisquare")
         pass
-        
+
     r = scipy.stats.brunnermunzel(sample1, sample2)
     result['BrunnerMunzel'] = {
         'statistic': r.statistic,
         'pvalue': r.pvalue
-    }        
+    }
 
     return result
 
@@ -151,7 +146,7 @@ benchmark_samples = [gaussian_sample(size=1000) for _ in range(7)]
 results = collections.defaultdict(list)
 cmd = "convert -delay 50 -loop 0".split()
 for idx, test_sample in enumerate(unbinned_test_samples):
- 
+
     print("loc = %.2f" % locs[idx])
     benchmark_sample = numpy.random.normal(size=1000)
     voka_2samp_result = voka_2sample(test_sample, benchmark_sample)
@@ -160,7 +155,7 @@ for idx, test_sample in enumerate(unbinned_test_samples):
             results[name].append(numpy.log(result['pvalue']))
 
     lof, test_cluster, reference_cluster = voka.model.average_lof(voka_test_samples[idx], benchmark_samples)
-    results['voka'].append(lof) 
+    results['voka'].append(lof)
 
     pylab.figure()
     marker = 'ro' if lof > 2. else 'go'
@@ -185,7 +180,7 @@ subprocess.run(cmd)
 # and test samples for each pull value
 # 2) add the vline for the lof threshold
 # 3) animation showing the color change
-     
+
 pylab.figure()
 for name, result in results.items():
     if name=='voka':
@@ -196,9 +191,9 @@ pylab.xlabel('gaussian pull')
 pylab.axhline(-3.0)
 pylab.ylabel('log(p-value)')
 pylab.legend()
- 
+
 pylab.figure()
-pylab.plot(locs, results['voka'], label='icecube')    
+pylab.plot(locs, results['voka'], label='icecube')
 pylab.title('LOF-based Method')
 pylab.xlabel('gaussian pull')
 pylab.axhline(2.0)
@@ -210,6 +205,5 @@ pylab.legend()
 # #for idx in range(len(benchmark_samples)-1):
 # #    for jdx in range(idx+1, len(benchmark_samples)):
 # #        benchmark_x = voka.metric.shape_chisq(,)
-# 
+#
 #pylab.show()
-    

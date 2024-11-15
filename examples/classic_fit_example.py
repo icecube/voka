@@ -5,8 +5,8 @@ Example illustrating the classic method, meaning fitting by hand.
 '''
 
 import numpy
-import pylab
-import scipy.optimize
+import pylab  # type: ignore[import]
+import scipy.optimize  # type: ignore[import]
 
 # Histogram the arrival time, expected to be gaussian, of the charge
 # sampled from a gaussian.

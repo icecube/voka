@@ -1,6 +1,6 @@
 
 import numpy
-import scipy.stats
+import scipy.stats  # type: ignore[import]
 
 def traditional(sample1, sample2):
 
@@ -12,19 +12,19 @@ def traditional(sample1, sample2):
     # hiccup #6 (FC) ValueError: Less than 3 levels.  Friedman test not appropriate.
 
     result = dict()
-    
+
     r = scipy.stats.ttest_ind(sample1, sample2)
     result['TTest'] = {
         'statistic': r.statistic,
         'pvalue': r.pvalue
     }
-    
+
     r = scipy.stats.ks_2samp(sample1, sample2)
     result['KolmogorovSmirnov'] = {
         'statistic': r.statistic,
         'pvalue': r.pvalue
     }
-            
+
     try:
         r = scipy.stats.epps_singleton_2samp(sample1, sample2)
         result['EppsSingleton'] = {
@@ -44,7 +44,7 @@ def traditional(sample1, sample2):
     except ValueError:
         #print("    skipping mannwhitneyu")
         pass
-        
+
     r = scipy.stats.ranksums(sample1, sample2)
     result['Ranksums'] = {
         'statistic': r.statistic,
@@ -66,7 +66,7 @@ def traditional(sample1, sample2):
         result['Kruskal'] = {
             'statistic': r.statistic,
             'pvalue': r.pvalue
-        }        
+        }
     except:
         #print("    skipping kruskal")
         pass
@@ -76,15 +76,15 @@ def traditional(sample1, sample2):
         result['FriedmanChiSquare'] = {
             'statistic': r.statistic,
             'pvalue': r.pvalue
-        }        
+        }
     except ValueError:
         #print("    skipping friedmanchisquare")
         pass
-        
+
     r = scipy.stats.brunnermunzel(sample1, sample2)
     result['BrunnerMunzel'] = {
         'statistic': r.statistic,
         'pvalue': r.pvalue
-    }        
+    }
 
     return result

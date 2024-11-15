@@ -15,12 +15,11 @@ available from scipy:
 * scipy.stats.anderson_ksamp
 '''
 
-import logging
 import collections
 
 import numpy
-import pylab
-import scipy.stats
+import pylab  # type: ignore[import]
+import scipy.stats  # type: ignore[import]
 
 import voka.tools.render
 
@@ -61,19 +60,19 @@ def voka_2sample(sample1, sample2):
     # hiccup #6 (FC) ValueError: Less than 3 levels.  Friedman test not appropriate.
 
     result = dict()
-    
+
     r = scipy.stats.ttest_ind(sample1, sample2)
     result['TTest'] = {
         'statistic': r.statistic,
         'pvalue': r.pvalue
     }
-    
+
     r = scipy.stats.ks_2samp(sample1, sample2)
     result['KolmogorovSmirnov'] = {
         'statistic': r.statistic,
         'pvalue': r.pvalue
     }
-            
+
     try:
         r = scipy.stats.epps_singleton_2samp(sample1, sample2)
         result['EppsSingleton'] = {
@@ -91,7 +90,7 @@ def voka_2sample(sample1, sample2):
         }
     except ValueError:
         print("    skipping mannwhitneyu")
-        
+
     r = scipy.stats.ranksums(sample1, sample2)
     result['Ranksums'] = {
         'statistic': r.statistic,
@@ -112,7 +111,7 @@ def voka_2sample(sample1, sample2):
         result['Kruskal'] = {
             'statistic': r.statistic,
             'pvalue': r.pvalue
-        }        
+        }
     except:
         print("    skipping kruskal")
 
@@ -121,15 +120,15 @@ def voka_2sample(sample1, sample2):
 #        result['FriedmanChiSquare'] = {
 #            'statistic': r.statistic,
 #            'pvalue': r.pvalue
-#        }        
+#        }
 #    except ValueError:
 #        print("    skipping friedmanchisquare")
-        
+
     r = scipy.stats.brunnermunzel(sample1, sample2)
     result['BrunnerMunzel'] = {
         'statistic': r.statistic,
         'pvalue': r.pvalue
-    }        
+    }
 
     return result
 
@@ -139,12 +138,12 @@ def compare(benchmark_distribution, systematic_distribution, pvalues, density=Fa
     # Use the same histogram settings for each.
     _range = (-5,5)
     _bins = 100
-    
+
     # First histogram to make samples
     benchmark_sample = numpy.histogram(benchmark_distribution,
                                        density=density,
                                        range=_range,
-                                       bins=_bins)[0]    
+                                       bins=_bins)[0]
     systematic_sample = numpy.histogram(systematic_distribution,
                                         range=_range,
                                         density=density,
@@ -154,7 +153,7 @@ def compare(benchmark_distribution, systematic_distribution, pvalues, density=Fa
     comparison = voka_2sample(benchmark_sample, systematic_sample)
     for k, v in comparison.items():
         pvalues[k].append(v['pvalue'])
-        
+
 if __name__ == '__main__':
 
     # Tests to perform
@@ -166,31 +165,31 @@ if __name__ == '__main__':
     benchmark_width = 1.0
     benchmark_center = 0.0
     benchmark_size = 100000
-    
+
     widths = numpy.arange(0.5*benchmark_width,
                           1.5*benchmark_width,
                           0.001)
-    
+
     centers = numpy.arange(-0.5,
                            0.5,
                            0.001)
-    
+
     sizes = numpy.arange(0.5*benchmark_size,
                          1.5*benchmark_size,
                          10)
 
     draw_width_idx = int(0.9*len(widths))
     draw_center_idx = int(0.9*len(centers))
-    
+
     benchmark_distribution = numpy.random.normal(loc=benchmark_center,
                                                  scale=benchmark_width,
                                                  size=benchmark_size)
-    
-    # Generate systematic distributions    
+
+    # Generate systematic distributions
     print(80*'-')
     figure_number = 1
-    
-    pvalues_width_systematic = collections.defaultdict(list)
+
+    pvalues_width_systematic: dict = collections.defaultdict(list)
     for idx, systematic_width in enumerate(widths):
         #print('width = %.4f' % systematic_width)
         systematic_distribution = numpy.random.normal(loc=benchmark_center,
@@ -206,12 +205,12 @@ if __name__ == '__main__':
             # Use the same histogram settings for each.
             _range = (-5,5)
             _bins = 100
-            
+
             # First histogram to make samples
             benchmark_sample = numpy.histogram(benchmark_distribution,
                                                density=DENSITY,
                                                range=_range,
-                                               bins=_bins)[0]    
+                                               bins=_bins)[0]
             systematic_sample = numpy.histogram(systematic_distribution,
                                                 density=DENSITY,
                                                 range=_range,
@@ -221,21 +220,21 @@ if __name__ == '__main__':
             figure_number += 1
             voka.tools.render.draw_ratio(systematic_sample, benchmark_sample)
 
-        
+
     pylab.figure(figure_number)
     figure_number += 1
     for label, pvs in pvalues_width_systematic.items():
         min_pvalue = min(pvs)
         y = [numpy.log10(p) for p in pvs]
         pylab.plot(widths, y, label=label)
-        
+
     pylab.title("Systematic Width Variation")
     pylab.legend()
     pylab.xlabel('width')
     pylab.ylabel('log(p-value)')
-        
-    print(80*'-')
-    pvalues_center_systematic = collections.defaultdict(list)
+
+    print(80 * '-')
+    pvalues_center_systematic: dict = collections.defaultdict(list)
     for idx, systematic_center in enumerate(centers):
         #print('center = %.4f' % systematic_center)
         systematic_distribution = numpy.random.normal(loc=systematic_center,
@@ -251,19 +250,19 @@ if __name__ == '__main__':
             # Use the same histogram settings for each.
             _range = (-5,5)
             _bins = 100
-            
+
             # First histogram to make samples
             benchmark_sample = numpy.histogram(benchmark_distribution,
                                                density=DENSITY,
                                                range=_range,
-                                               bins=_bins)[0]    
+                                               bins=_bins)[0]
             systematic_sample = numpy.histogram(systematic_distribution,
                                                 density=DENSITY,
                                                 range=_range,
                                                 bins=_bins)[0]
 
             pylab.figure(figure_number)
-            figure_number += 1            
+            figure_number += 1
             voka.tools.render.draw_ratio(systematic_sample, benchmark_sample)
 
     pylab.figure(figure_number)
@@ -271,7 +270,7 @@ if __name__ == '__main__':
     for label, pvs in pvalues_center_systematic.items():
         y = [numpy.log10(p) for p in pvs]
         pylab.plot(centers, y, label=label)
-                   
+
     pylab.title("Systematic Center Variation")
     pylab.legend()
     pylab.xlabel('center')
@@ -280,7 +279,7 @@ if __name__ == '__main__':
     print(80*'-')
     pylab.figure(figure_number)
     figure_number += 1
-    pvalues_size_systematic = collections.defaultdict(list)
+    pvalues_size_systematic: dict = collections.defaultdict(list)
     for systematic_size in sizes:
         #print('size = %d' % int(systematic_size))
         systematic_distribution = numpy.random.normal(loc=benchmark_center,
@@ -290,15 +289,14 @@ if __name__ == '__main__':
                 systematic_distribution,
                 pvalues_size_systematic,
                 density=DENSITY)
-        
-    for label, pvs in pvalues_size_systematic.items():        
+
+    for label, pvs in pvalues_size_systematic.items():
         y = [numpy.log10(p) for p in pvs]
         pylab.plot(sizes, y, label=label)
-                   
+
     pylab.title("Systematic Size Variation")
     pylab.legend()
     pylab.xlabel('size')
     pylab.ylabel('log(p-value)')
-    
-    pylab.show()
 
+    pylab.show()

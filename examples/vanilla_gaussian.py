@@ -6,9 +6,8 @@ Vanilla gaussian example.
 
 
 import numpy
-import pylab
-import scipy.optimize
-import scipy.stats
+import pylab  # type: ignore[import]
+import scipy.stats  # type: ignore[import]
 
 import voka.metrics
 

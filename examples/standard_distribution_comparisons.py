@@ -12,16 +12,13 @@ sampled from a gaussian.
 
 import collections
 
-import logging
 import numpy
-import pylab
-import scipy.optimize
-import scipy.stats
+import pylab  # type: ignore[import]
 
 # What's the difference here between voka.metrics.chisq
 # and scipy.stats.chisquare ?
-#import voka.metrics.chisq
-import scipy.stats
+# import voka.metrics.chisq
+import scipy.stats  # type: ignore[import]
 
 histograms = dict()
 N_HISTOGRAMS = 1000

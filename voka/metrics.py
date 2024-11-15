@@ -1,7 +1,7 @@
-from math import sqrt
-from math import fabs
-from math import log
-from scipy.special import binom
+from math import fabs, log, sqrt
+
+from scipy.special import binom  # type: ignore[import]
+
 
 def norm_chisq(vector1, vector2):
     r"""Compare sequences vector1, vector2 with a Chi^2 test.

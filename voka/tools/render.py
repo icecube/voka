@@ -1,12 +1,11 @@
-import logging
-from math import sqrt
+"""Rendering histograms."""
 
-import pylab
+import pylab  # type: ignore[import]
 
 def draw(sample, title=None, color = "green", ylim = None, log = False, yerr = None):
     r"""Make a matplotlib figure of a sample.
     Arguments:
-        title : Plot title. 
+        title : Plot title.
         color : matplotlib color string
             Color of the histogram area.
         ylim : None or (float, float)
@@ -57,8 +56,8 @@ def draw_comparisons(test_sample,
             log : bool
                 Draw the y-axis in a logarithmic scale.
 
-    r"""    
-    
+    r"""
+
     # Need to figure out how many subplots to make.
     # Also need to scale the title
 
@@ -76,13 +75,13 @@ def draw_comparisons(test_sample,
 
     fig_idx = subplot_start[n_plots]
     ax = pylab.subplot(fig_idx)
-    ax.set_title(title) 
+    ax.set_title(title)
     draw(test_sample, color = colors['test'], log = log)
 
     samples = benchmark_samples[:8] \
         if len(benchmark_samples) > 8 \
            else benchmark_samples
-    
+
     for sample in samples:
         fig_idx += 1
         pylab.subplot(fig_idx)
@@ -93,7 +92,7 @@ def draw_ratios(test_sample,
                 title=None,
                 colors = {'test': 'blue',  'benchmarks': 'green'},
                 log = False):
-    
+
     # Need to figure out how many subplots to make.
     # Also need to scale the title
 
@@ -106,22 +105,22 @@ def draw_ratios(test_sample,
                      8 : 331,
                      9 : 331,
     } # matplotlib chokes on 431 and 431
-    
+
     n_plots = min(len(benchmark_samples), 9)
-    
+
     samples = benchmark_samples[:8] \
         if len(benchmark_samples) > 8 \
            else benchmark_samples
-    
+
     fig_idx = subplot_start[n_plots]
     for sample in samples:
         pylab.subplot(fig_idx)
         fig_idx += 1
 
         ratio = [t/s if s else 0. for t,s in zip(test_sample, sample)]
-        
+
         draw(ratio, color = colors['benchmarks'], log = log)
-        
+
 def draw_ratio(test_sample,
                benchmark_sample,
                colors = {'test': 'blue',  'benchmarks': 'green'},
@@ -137,14 +136,14 @@ def draw_ratio(test_sample,
             log : bool
                 Draw the y-axis in a logarithmic scale.
 
-    r"""    
-    
+    r"""
+
     # Need to figure out how many subplots to make.
     # Also need to scale the title
 
     ax = pylab.subplot(221)
     draw(test_sample, color = colors['test'], log = log)
-    
+
     pylab.subplot(222)
     draw(benchmark_sample, color = colors['benchmarks'], log = log)
 
@@ -152,9 +151,3 @@ def draw_ratio(test_sample,
                     for t,b in zip(test_sample, benchmark_sample)]
     pylab.subplot(223)
     draw(ratio_sample)
-
-    
-    
-
-
-    

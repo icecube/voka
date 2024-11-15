@@ -10,8 +10,8 @@ sampled from a gaussian.
 '''
 
 import numpy
-import pylab
-import scipy.stats
+import pylab  # type: ignore[import]
+import scipy.stats  # type: ignore[import]
 
 import voka.metrics
 
