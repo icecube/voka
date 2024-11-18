@@ -2,6 +2,13 @@
 
 
 
+## v0.1.2 (2024-11-18)
+
+###  
+
+* Publish to PyPI (Followup 2) ([`184cf02`](https://github.com/icecube/voka/commit/184cf026290e14bb00ada883b967063797491d70))
+
+
 ## v0.1.1 (2024-11-18)
 
 ###  
