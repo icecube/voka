@@ -2,6 +2,13 @@
 
 
 
+## v0.1.3 (2024-11-18)
+
+###  
+
+* rm `samples.py` (use github.com/icecube/simprod-histogram) ([`93a36dd`](https://github.com/icecube/voka/commit/93a36dd34bfd8930712f2866635d1ed8fd5169ca))
+
+
 ## v0.1.2 (2024-11-18)
 
 ###  
