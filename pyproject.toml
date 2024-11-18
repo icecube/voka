@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 version = "0.0.1"
-dependencies = ["numpy", "scipy", "scipy"]
+dependencies = ["numpy", "scipy"]
 name = "icecube-voka"
 description = "Sanity checks on sequences/histograms using ML techniques. "
 readme = "README.md"
