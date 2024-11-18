@@ -2,6 +2,15 @@
 
 
 
+## v0.1.1 (2024-11-18)
+
+###  
+
+* Merge remote-tracking branch &#39;origin/main&#39; ([`3daa122`](https://github.com/icecube/voka/commit/3daa122c198a50433295194a23852399f5619cd2))
+
+* Use `pypa/gh-action-pypi-publish@v1.8.14` ([`f5f55cd`](https://github.com/icecube/voka/commit/f5f55cd6152fd96e966f6f7a3c702990dab79566))
+
+
 ## v0.1.0 (2024-11-18)
 
 ### [minor]
