@@ -2,6 +2,13 @@
 
 
 
+## v0.1.0 (2024-11-18)
+
+### [minor]
+
+* Publish to PyPI (Followup) [minor] ([`bb96755`](https://github.com/icecube/voka/commit/bb9675546f977a579cc31003c2998f4eaf493052))
+
+
 ## v0.0.1 (2024-11-18)
 
 ###  
