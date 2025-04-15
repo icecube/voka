@@ -2,6 +2,13 @@
 
 
 
+## v0.1.4 (2025-04-15)
+
+###  
+
+* Use `pypa/gh-action-pypi-publish@v1.12.4` ([`8af5fea`](https://github.com/icecube/voka/commit/8af5fea7dccc7406f6c61e1eda43cda3a9931b35))
+
+
 ## v0.1.3 (2024-11-18)
 
 ###  
