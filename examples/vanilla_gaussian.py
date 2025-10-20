@@ -44,6 +44,9 @@ for i in range(N_HISTOGRAMS):
 
     T_dist.append(test_stat(bin_values, expectation))
 
+if NDOF is None:
+    raise RuntimeError('NDOF was never set (is None)')
+
 pylab.figure(1)
 pylab.hist(T_dist, bins=100)
 

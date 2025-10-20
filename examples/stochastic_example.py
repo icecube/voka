@@ -47,6 +47,9 @@ for i in range(N_HISTOGRAMS):
         charge_T_dist.append(test_stat(ch1, ch2))
         time_T_dist.append(test_stat(th1, th2))
 
+if NDOF is None:
+    raise RuntimeError('NDOF was never set (is None)')
+
 rv = scipy.stats.chi2(NDOF)
 pylab.figure(1)
 pylab.hist(charge_T_dist, density=True, bins=100)
