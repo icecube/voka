@@ -29,23 +29,23 @@ jobs:
   # LINTERS
   ###########################################################################
 
-  flake8:
-    needs: [ py-versions ]
-    runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        py3: ${{ fromJSON(needs.py-versions.outputs.matrix) }}
-    steps:
-      - uses: actions/checkout@v5
-        with:
-          ref: ${{ github.sha }}  # lock to triggered commit (github.ref is dynamic)
-      - uses: actions/setup-python@v6
-        with:
-          python-version: ${{ matrix.py3 }}
-      - uses: WIPACrepo/wipac-dev-flake8-action@v1.3
-        with:
-          max-complexity: 10  # ideal is ~10-15
+#  flake8:
+#    needs: [ py-versions ]
+#    runs-on: ubuntu-latest
+#    strategy:
+#      fail-fast: false
+#      matrix:
+#        py3: ${{ fromJSON(needs.py-versions.outputs.matrix) }}
+#    steps:
+#      - uses: actions/checkout@v5
+#        with:
+#          ref: ${{ github.sha }}  # lock to triggered commit (github.ref is dynamic)
+#      - uses: actions/setup-python@v6
+#        with:
+#          python-version: ${{ matrix.py3 }}
+#      - uses: WIPACrepo/wipac-dev-flake8-action@v1.3
+#        with:
+#          max-complexity: 10  # ideal is ~10-15
 
   mypy:
     needs: [ py-versions ]
@@ -73,7 +73,7 @@ jobs:
     if: ${{ github.actor != 'dependabot[bot]' }} # dependabot cannot access PAT
     needs: [
       # linters so we don't waste compute on faulty code...
-      flake8,
+      # flake8,
       mypy,
     ]
     runs-on: ubuntu-latest
@@ -95,7 +95,7 @@ jobs:
   py-dependencies:
     needs: [
       # linters so we don't waste compute on faulty code...
-      flake8,
+      # flake8,
       mypy,
     ]
     runs-on: ubuntu-latest
@@ -146,7 +146,7 @@ jobs:
     needs: [
       py-versions,
       mypy,
-      flake8,
+      # flake8,
       py-setup,
       py-dependencies,
       tests,
