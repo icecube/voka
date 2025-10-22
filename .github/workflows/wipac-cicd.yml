@@ -159,5 +159,7 @@ jobs:
       python-version: "${{ fromJSON(needs.py-versions.outputs.matrix)[0] }}"
       release-artifacts: |
         py-dependencies-logs
+      publish-to-pypi: true
     secrets:
       TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}  # trigger tag-event gha workflows
+      PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}
