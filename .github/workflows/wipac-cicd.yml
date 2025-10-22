@@ -162,4 +162,4 @@ jobs:
       publish-to-pypi: true
     secrets:
       TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}  # trigger tag-event gha workflows
-      PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}
+      PYPI_TOKEN: ${{ secrets.WIPAC_PYPI_TOKEN }}
