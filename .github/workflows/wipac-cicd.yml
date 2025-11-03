@@ -104,7 +104,7 @@ jobs:
         with:
           ref: ${{ github.sha }}  # lock to triggered commit (github.ref is dynamic)
           fetch-depth: 0  # setuptools-scm needs to access git tags
-      - uses: WIPACrepo/wipac-dev-py-dependencies-action@v3.2
+      - uses: WIPACrepo/wipac-dev-py-dependencies-action@v3.4
 
 
   ###########################################################################
